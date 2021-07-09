@@ -1,0 +1,34 @@
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        {% for step in steps %}
+         <a class="nav-link {{ step.isActive() ? 'active': '' }}" id="nav-home-tab" data-toggle="tab" href="#{{ step.getCode() }}" role="tab" aria-controls="nav-home" aria-selected="true">
+            {{ step.getTitle() }}
+            <span class="fa {{ step.status ? 'fa-check-circle' : '' }}"></span> 
+         </a>
+        {% endfor %}
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    {% for step in steps %}
+        <div class="tab-pane fade show {{ step.isActive() ? 'active': '' }}" id="{{ step.getCode() }}" role="tabpanel" aria-labelledby="nav-home-tab">
+            {{ step.getDescription()|raw }}
+            <hr/>
+            {% if step.getLink %}
+                <a href="{{ step.getLink }}" class="btn btn-outline-primary btn-sm">
+                    <span class="fa fa-desktop"></span> {{ 'show'|trans }}
+                </a>
+            {% endif %}
+            {% if step.getNext() %}
+                <button href="javascript:;" class="btn btn-outline-primary btn-sm" reff-id="{{ step.getNext().getCode() }}" onclick="openNext(this)">
+                    <span class="fa fa-align-right"></span> {{ 'next'|trans }}
+                </button>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+<script>
+    function openNext(d) {
+        let dom = $(d);
+        $('#nav-tab a[href="#'+ dom.attr('reff-id') +'"]').tab('show');
+    }
+</script>

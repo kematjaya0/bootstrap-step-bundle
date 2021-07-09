@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        public: true
+        autowire: true
+        
+    Kematjaya\StepBundle\Builder\StepBuilderInterface:
+        class: Kematjaya\StepBundle\Builder\StepBuilder
+        
+    Kematjaya\StepBundle\Twig\StepExtension:
+        tags: ['twig.extension']
