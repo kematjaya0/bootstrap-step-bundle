@@ -33,22 +33,26 @@ class RoleStepBuilder extends StepBuilder
     
     public function getSteps(): Collection
     {
-        $steps = parent::getSteps();
-        
-        return $steps->filter(function (StepInterface $step) {
+        $this->subscribers = $this->subscribers->filter(function (StepInterface $step) {
             if ($step instanceof RoleSupportedStepInterface) {
-                $supportedRoles = $step->getRoles();
                 
-                foreach ($this->tokenStorage->getToken()->getRoleNames() as $role) {
-                    if (in_array($role, $supportedRoles)) {
-                        return true;
-                    }
-                }
-                
-                return false;
+                return $this->isSupported($step->getRoles());
             }
             
             return true;
         });
+        
+        return parent::getSteps();
+    }
+    
+    protected function isSupported(array $supportedRoles):bool
+    {
+        foreach ($this->tokenStorage->getToken()->getRoleNames() as $role) {
+            if (in_array($role, $supportedRoles)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

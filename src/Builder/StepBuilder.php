@@ -22,7 +22,7 @@ class StepBuilder implements StepBuilderInterface
      * 
      * @var Collection
      */
-    private $subscribers;
+    protected $subscribers;
     
     public function __construct() 
     {
