@@ -4,7 +4,7 @@ services:
         autowire: true
         
     Kematjaya\StepBundle\Builder\StepBuilderInterface:
-        class: Kematjaya\StepBundle\Builder\StepBuilder
+        class: Kematjaya\StepBundle\Builder\RoleStepBuilder
         
     Kematjaya\StepBundle\Twig\StepExtension:
         tags: ['twig.extension']
