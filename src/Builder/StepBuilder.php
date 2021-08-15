@@ -78,6 +78,17 @@ class StepBuilder implements StepBuilderInterface
             return $step->getStatus();
         });
         
+        if ($dones->isEmpty()) {
+            if (!$result->first() instanceof StepInterface) {
+                
+                return $result;
+            }
+            
+            $result->first()->setActive(true);
+            
+            return $result;
+        }
+        
         $result->map(function (StepInterface $step) use ($dones) {
             if (!$step instanceof ActivatedStepInterface) {
                 
