@@ -1,7 +1,9 @@
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        {% set active = '' %}
         {% for step in steps %}
-         <a class="nav-link {{ step.isActive() ? 'active': '' }}" id="nav-home-tab" data-toggle="tab" href="#{{ step.getCode() }}" role="tab" aria-controls="nav-home" aria-selected="true">
+            {% set active = (step.isActive() and active == '') ? step.getTitle() : active %}
+            <a class="nav-link {{ (active == step.getTitle() and step.isActive()) ? 'active': '' }}" id="nav-home-tab" data-toggle="tab" href="#{{ step.getCode() }}" role="tab" aria-controls="nav-home" aria-selected="true">
             {{ step.getTitle() }}
             <span class="fa {{ step.status ? 'fa-check-circle' : '' }}"></span> 
          </a>
@@ -9,8 +11,10 @@
     </div>
 </nav>
 <div class="tab-content" id="nav-tabContent">
+    {% set active = '' %}
     {% for step in steps %}
-        <div class="tab-pane fade show {{ step.isActive() ? 'active': '' }}" id="{{ step.getCode() }}" role="tabpanel" aria-labelledby="nav-home-tab">
+        {% set active = (step.isActive() and active == '') ? step.getTitle() : active %}
+        <div class="tab-pane fade show {{ (active == step.getTitle() and step.isActive()) ? 'active': '' }}" id="{{ step.getCode() }}" role="tabpanel" aria-labelledby="nav-home-tab">
             {{ step.getDescription()|raw }}
             <hr/>
             {% if step.getLink %}
