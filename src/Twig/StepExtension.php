@@ -45,8 +45,14 @@ class StepExtension extends AbstractExtension
     
     public function render():string
     {
+        $steps = $this->builder->getSteps();
+        if ($steps->isEmpty()) {
+            
+            return null;
+        }
+        
         return $this->twig->render('@Step/step.html.twig', [
-            'steps' => $this->builder->getSteps()
+            'steps' => $steps
         ]);
     }
 }
