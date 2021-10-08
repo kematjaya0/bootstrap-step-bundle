@@ -43,7 +43,7 @@ class StepExtension extends AbstractExtension
         ];
     }
     
-    public function render():string
+    public function render():?string
     {
         $steps = $this->builder->getSteps();
         if ($steps->isEmpty()) {
